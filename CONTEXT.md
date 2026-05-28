@@ -92,6 +92,14 @@ _Avoid_: Anonymous user, visitor, demo player
 A player signed in with a Google account (including NSW education Google Workspace accounts). Gains access to the meta-game: Lifetime Average, Tokens, Tiers, and Leaderboard. All Run data is persisted server-side.
 _Avoid_: Registered user, member, logged-in user
 
+**Question Template**:
+A parameterised definition for generating math problems. Each Template has a unique ID, a generator function that produces unlimited unique questions by randomising variables, a misconception-based wrong-answer generator, and metadata (category, speed tier, NAPLAN strand). Templates are the atomic unit of the problem system — the Question Bank is built from them.
+_Avoid_: Problem type, question pattern, problem generator
+
+**Question Bank**:
+A static, pre-generated set of concrete questions produced by running all implemented Question Templates. The Problem Engine draws from the Question Bank at runtime. The bank can be regenerated at any time by re-running the Templates. Minimum 50 questions per Template. Checked into the repo as a JSON asset.
+_Avoid_: Problem pool, question database, problem set
+
 ## Example dialogue
 
 > **Dev**: "The player did a Run but kept failing on the third Main Corridor."

@@ -8,9 +8,14 @@
 
 ## Level Structure
 
-- Each level contains **4–6 math problems** displayed throughout the corridor.
-- Every problem includes its answer on the wall — the player must judge whether each answer is **correct or incorrect**.
-- **All answers must be correct** to proceed. If even **one** problem is solved incorrectly, the player needs to back.
+- Each Level is a sequence of Passive Corridors followed by a Main Corridor.
+- Each Main Corridor contains **6 math problems** displayed on the walls.
+- Every problem includes its answer — the player must judge whether each answer is correct.
+- A Main Corridor has 0 or 1 **Anomaly** (incorrect answer). ~50% of Main Corridors contain one.
+- If an Anomaly is present, the player must turn back. Walking forward is a wrong decision.
+- If all answers are correct, the player must walk forward. Turning back is a wrong decision.
+- A wrong decision triggers a **Reset** to Level 0.
+- A Run has **8 Levels**. Completing all 8 ends the Run.
 
 ## Math Problem Design
 
@@ -20,18 +25,20 @@
 
 ## The Scoring System
 
-- **Maximum Score:** 100 points per run.
-- **The Flawless Rule:** Any run completed with zero mistakes automatically scores a perfect 100, regardless of how slow the player moves.
-- **The "Time Tax":** Making a mistake adds a real-time physical delay (backtracking) plus a static time penalty to the clock. This lowers the final speed score but encourages players to finish "bad games."
+- **Maximum Score:** 100 per Run.
+- **Run Score:** Combines speed and number of Resets, with speed heavily weighted.
+- **Flawless Run:** A Run with zero Resets scores a minimum of 72, with speed pushing it toward 100.
+- **Runs with Resets** can still score well if the player is fast (e.g., 3 Resets at near-perfect speed ≈ 72).
+- **Floor:** 0. Exact formula is provisional and subject to playtesting.
 
 ## Automated Token Economy & Anti-Exploit
 
-To prevent players from constantly quitting and restarting when they make a mistake, the game uses an automated token system linked to a **Lifetime Average Score**:
+To prevent players from constantly quitting and restarting when they make a mistake, the game uses an automated Token system linked to a **Lifetime Average**:
 
-- **Speedrun Tokens (The Shield):** These tokens act as a safety net for competitive runs.
-- **The Shield Trigger (Bad Run):** If a run score falls 10 points below the player's lifetime average, a token is automatically consumed. The terrible score is discarded, protecting their average.
-- **The Fuel Trigger (Good Run):** Scoring above the lifetime average — or hitting a perfect 100 — automatically awards a token.
-- **The DNF Penalty:** Force-quitting a match gives the player a single-run score of `Current Average - 5`. This prevents strategic rage-quitting without permanently destroying their career stats.
+- **Token Earn:** Completing all 8 Levels with a Run Score at or above the Token Threshold (lower of Lifetime Average minus 10, or 70) earns one Token.
+- **Token Auto-Spend (Bad Run):** If a Run Score falls below the Mulligan Threshold, a Token is automatically consumed. The bad Run is discarded and does not count.
+- **DNF Penalty:** Force-quitting mid-Run consumes a Token if available (no score recorded). If zero Tokens, a score of 0 is recorded against the Lifetime Average.
+- Tokens are never manually spent — the system handles everything automatically.
 
 ## Progression & Leaderboards
 
@@ -66,8 +73,11 @@ To prevent players from constantly quitting and restarting when they make a mist
 >
 > **Note:** Statistics & Probability is limited to problems that work as wall text — probability, mean, median, mode from short lists. No charts or tables.
 
-## Environmental Distractions
+## Environmental Obstructions
 
-> **Status:** To be designed.
->
-> Ideas for atmospheric elements that disrupt the player's focus while solving problems.
+> **Status:** Defined. See CONTEXT.md for the Obstruction term.
+
+- **Obstructions** are environmental effects applied to every problem at varying intensity.
+- Types include: flickering lights, problems at odd angles (requires panning), timed reveals (screen cycles on/off).
+- Randomised per Corridor but balanced for fairness across Runs.
+- Obstructions add time pressure without increasing math difficulty.
